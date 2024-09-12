@@ -71,7 +71,7 @@ class Proxy404Middleware(MiddlewareMixin):
                     new_url = urlunsplit([scheme, new_host,
                         parts.path, parts.query, parts.fragment])
                     log(f'url: {url}') #DEBUG
-                    log(f'parts: {parts}')) #DEBUG
+                    log(f'parts: {parts}') #DEBUG
                     log(f'new url: {new_url}') #DEBUG
 
                     try:
