@@ -35,6 +35,7 @@ try:
     from django import http
     from django.conf import settings
     from django.utils.deprecation import MiddlewareMixin
+    from django.utils.html import escape
 except ModuleNotFoundError:
     import sys
     sys.exit('Django required')
@@ -79,7 +80,8 @@ class Proxy404Middleware(MiddlewareMixin):
                         stream = urllib.request.urlopen(new_url)
                         log(f'reading {new_url}') #DEBUG
                         try:
-                            new_response = http.HttpResponse(stream.read())
+                            content = escape(stream.read().decode('utf-8'))  # Escape any HTML tags
+                            new_response = http.HttpResponse(content, content_type='text/html')
                         finally:
                             stream.close()
                         if new_response.status_code == 404:
